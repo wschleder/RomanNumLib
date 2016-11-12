@@ -1,6 +1,6 @@
-APPEXE = app
+APPEXE = app.exe
 LIB = libRomanNumUtil.a
-TESTEXE = romanNumlib_test
+TESTEXE = romanNumlib_test.exe
 
 SRCDIR = src
 SRCFILES = $(wildcard ${SRCDIR}/*.c)
