@@ -28,6 +28,15 @@ START_TEST (test_romanNumbersAdd_GuardsAgainstNullOutputBuffer)
 }
 END_TEST
 
+START_TEST (test_romanNumbersAdd_Add_i_Plus_i)
+{
+	char buffer[80];
+	RomanNumLibResults result = romanNumbersAdd("i", "i", buffer);
+	ck_assert(result == eRomanNumLib_NoError);
+	ck_assert_str_eq(buffer, "ii");
+}
+END_TEST
+
 /****************************************************************************************/
 Suite * RomanNumberalLib_suite(void)
 {
@@ -42,6 +51,7 @@ Suite * RomanNumberalLib_suite(void)
 	tcase_add_test(tc_core, test_romanNumbersAdd_GuardsAgainstNullInputA);
 	tcase_add_test(tc_core, test_romanNumbersAdd_GuardsAgainstNullInputB);
 	tcase_add_test(tc_core, test_romanNumbersAdd_GuardsAgainstNullOutputBuffer);
+	tcase_add_test(tc_core, test_romanNumbersAdd_Add_i_Plus_i);
 	
     suite_add_tcase(s, tc_core);
     

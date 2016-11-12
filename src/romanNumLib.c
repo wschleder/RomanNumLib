@@ -1,5 +1,7 @@
 #include "romanNumLib.h"
 
+#include <string.h>
+
 /****************************************************************************************/
 //  Public Functions
 /****************************************************************************************/
@@ -9,6 +11,9 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 	{
 		return eRomanNumLib_Error;
 	}
+	
+	strcpy(sum, aval);
+	strcat(sum, bval);
 	
 	return eRomanNumLib_NoError;
 }
