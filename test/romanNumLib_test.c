@@ -5,9 +5,11 @@
 #include "../src/romanNumLib.h"
 
 /****************************************************************************************/
-START_TEST (test_dummy)
+START_TEST (test_romanNumbersAdd_GuardsAgainstNullInputA)
 {
-    ck_assert(0);
+	char buffer[80];
+	RomanNumLibResults result = romanNumbersAdd(NULL, "", buffer);
+    ck_assert(result == eRomanNumLib_Error);
 }
 END_TEST
 
@@ -22,7 +24,7 @@ Suite * RomanNumberalLib_suite(void)
     /* Core test case */
     tc_core = tcase_create("Core");
     
-    tcase_add_test(tc_core, test_dummy);
+    tcase_add_test(tc_core, test_romanNumbersAdd_GuardsAgainstNullInputA);
     
     suite_add_tcase(s, tc_core);
     

@@ -3,14 +3,19 @@
 /****************************************************************************************/
 //  Public Functions
 /****************************************************************************************/
-int romanNumbersAdd(const char *aval, const char *bval, char *sum)
+RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum)
 {
-    return 0;
+	if (!aval)
+	{
+		return eRomanNumLib_Error;
+	}
+	
+	return eRomanNumLib_NoError;
 }
 
 /****************************************************************************************/
-int romanNumbersSub(const char *aval, const char *bval, char *diff)
+RomanNumLibResults romanNumbersSub(const char *aval, const char *bval, char *diff)
 {
-    return 0;
+    return eRomanNumLib_NoError;
 }
 
