@@ -5,7 +5,7 @@
 /****************************************************************************************/
 RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum)
 {
-	if (!aval)
+	if (!aval || !bval)
 	{
 		return eRomanNumLib_Error;
 	}
