@@ -1,0 +1,11 @@
+# Mac OS X noise
+.DS_Store
+
+# Build products
+*.d
+*.o
+*.a
+*.exe
+
+# Xcode directory
+RomanNumLib
