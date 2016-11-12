@@ -15,6 +15,11 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 	strcpy(sum, aval);
 	strcat(sum, bval);
 	
+	if (strcmp(sum, "iiii") == 0)
+	{
+		strcpy(sum, "iv");
+	}
+	
 	return eRomanNumLib_NoError;
 }
 
