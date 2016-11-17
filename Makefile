@@ -33,7 +33,8 @@ show:
 	@echo "Libs: " $(LDFLAGS)
 
 test: $(TESTDIR)/${TESTEXE}
-	./$(TESTDIR)/$(TESTEXE)
+	@echo
+	@./$(TESTDIR)/$(TESTEXE)
 
 $(TESTDIR)/${TESTEXE}: $(SRCFILES:.c=.o) $(TESTFILES:.c=.o)
 	${LD} $^ ${LDFLAGS} -o $(TESTDIR)/${TESTEXE}

@@ -2,32 +2,57 @@
 
 #include <string.h>
 
-#define LOCAL_BUFFER_SIZE		64
-
 /****************************************************************************************/
 //  Private Functions
 /****************************************************************************************/
-int _compareStringsAndReplace(char *inputString,
-							  char *compareString,
-							  char *replaceString,
-							  char *outputString)
+
+static int _convertRomanToDecimal(const char *roman)
 {
-	int retval = 0;
+	int decimal = 0;
 	
-	int compareLen = strlen(compareString);
-	int result = strncmp(inputString, compareString, compareLen);
-	if (result == 0)
+	if ( strcmp(roman, "i") == 0 )
 	{
-		strcpy(outputString, replaceString);
-		strcat(outputString, &(inputString[compareLen]));
-		retval = 1;
+		decimal = 1;
 	}
-	else
+	else if ( strcmp(roman, "ii") == 0 )
 	{
-		strcpy(outputString, inputString);
+		decimal = 2;
+	}
+	else if ( strcmp(roman, "iii") == 0 )
+	{
+		decimal = 3;
+	}
+	else if ( strcmp(roman, "v") == 0 )
+	{
+		decimal = 5;
 	}
 	
-	return retval;
+	return decimal;
+}
+
+static void _convertDecimalToRoman(int decimal, char *roman)
+{
+	switch (decimal)
+	{
+		case 2:
+			strcpy(roman, "ii");
+			break;
+		case 3:
+			strcpy(roman, "iii");
+			break;
+		case 4:
+			strcpy(roman, "iv");
+			break;
+		case 6:
+			strcpy(roman, "vi");
+			break;
+		case 8:
+			strcpy(roman, "viii");
+			break;
+		default:
+			*roman = '\0';
+			break;
+	}
 }
 
 /****************************************************************************************/
@@ -35,19 +60,17 @@ int _compareStringsAndReplace(char *inputString,
 /****************************************************************************************/
 RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum)
 {
-	char buf[LOCAL_BUFFER_SIZE];
-	int compareResult;
+	int adec, bdec, sumdec;
 	
 	if (!aval || !bval || !sum)
 	{
 		return eRomanNumLib_Error;
 	}
-	
-	strcpy(buf, aval);
-	strcat(buf, bval);
-	
-	compareResult = _compareStringsAndReplace(buf, "iiiii", "v", sum);
-	if (!compareResult) _compareStringsAndReplace(buf, "iiii", "iv", sum);
+
+	adec = _convertRomanToDecimal(aval);
+	bdec = _convertRomanToDecimal(bval);
+	sumdec = adec + bdec;
+	_convertDecimalToRoman(sumdec, sum);
 	
 	return eRomanNumLib_NoError;
 }
