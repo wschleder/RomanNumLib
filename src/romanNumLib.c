@@ -2,6 +2,11 @@
 
 #include <string.h>
 
+static char* DecimalToRomanLUT[] =
+	{
+		"", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"
+	};
+
 /****************************************************************************************/
 //  Private Functions
 /****************************************************************************************/
@@ -26,32 +31,20 @@ static int _convertRomanToDecimal(const char *roman)
 	{
 		decimal = 5;
 	}
+	else if ( strcmp(roman, "viii") == 0 )
+	{
+		decimal = 8;
+	}
 	
 	return decimal;
 }
 
 static void _convertDecimalToRoman(int decimal, char *roman)
 {
-	switch (decimal)
+	int lutSize = sizeof(DecimalToRomanLUT)/sizeof(DecimalToRomanLUT[0]);
+	if (decimal >= 0 && decimal < lutSize)
 	{
-		case 2:
-			strcpy(roman, "ii");
-			break;
-		case 3:
-			strcpy(roman, "iii");
-			break;
-		case 4:
-			strcpy(roman, "iv");
-			break;
-		case 6:
-			strcpy(roman, "vi");
-			break;
-		case 8:
-			strcpy(roman, "viii");
-			break;
-		default:
-			*roman = '\0';
-			break;
+		strcpy(roman, DecimalToRomanLUT[decimal]);
 	}
 }
 
