@@ -4,7 +4,8 @@
 
 static char* DecimalToRomanLUT[] =
 	{
-		"", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"
+		"",  "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix",
+		"x", "xi", "xii", "xiii", "xiv", "xv", "xvi", "xvii", "xiii", "xix"
 	};
 
 /****************************************************************************************/
@@ -14,26 +15,16 @@ static char* DecimalToRomanLUT[] =
 static int _convertRomanToDecimal(const char *roman)
 {
 	int decimal = 0;
+	int lutSize = sizeof(DecimalToRomanLUT)/sizeof(DecimalToRomanLUT[0]);
+	int index;
 	
-	if ( strcmp(roman, "i") == 0 )
+	for (index = 0; index < lutSize; index++)
 	{
-		decimal = 1;
-	}
-	else if ( strcmp(roman, "ii") == 0 )
-	{
-		decimal = 2;
-	}
-	else if ( strcmp(roman, "iii") == 0 )
-	{
-		decimal = 3;
-	}
-	else if ( strcmp(roman, "v") == 0 )
-	{
-		decimal = 5;
-	}
-	else if ( strcmp(roman, "viii") == 0 )
-	{
-		decimal = 8;
+		if ( strcmp(roman, DecimalToRomanLUT[index]) ==  0 )
+		{
+			decimal = index;
+			break;
+		}
 	}
 	
 	return decimal;
