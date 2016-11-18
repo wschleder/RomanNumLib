@@ -127,6 +127,15 @@ START_TEST (test_romanNumbersAdd_Add_xliii_Plus_vi)
 }
 END_TEST
 
+START_TEST (test_romanNumbersAdd_Add_xlviii_Plus_iii)
+{
+	char buffer[80];
+	RomanNumLibResults result = romanNumbersAdd("xlviii", "iii", buffer);
+	ck_assert(result == eRomanNumLib_NoError);
+	ck_assert_str_eq(buffer, "li");
+}
+END_TEST
+
 /****************************************************************************************/
 Suite * RomanNumberalLib_suite(void)
 {
@@ -152,6 +161,7 @@ Suite * RomanNumberalLib_suite(void)
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_xviii_Plus_iii);
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_xxxviii_Plus_iii);
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_xliii_Plus_vi);
+	tcase_add_test(tc_core, test_romanNumbersAdd_Add_xlviii_Plus_iii);
 	
     suite_add_tcase(s, tc_core);
     
