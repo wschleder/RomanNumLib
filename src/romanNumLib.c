@@ -3,6 +3,10 @@
 #include <string.h>
 
 /****************************************************************************************/
+
+#define MAXIMUM_ROMAN_NUMBER_DECIMAL	3999
+
+/****************************************************************************************/
 #define NBR_OF_LUT_DECADE_ENTRIES 		4
 #define NBR_OF_LUT_ENTRIES_PER_DECADE 	10
 
@@ -87,19 +91,26 @@ static int _convertRomanToDecimal(const char *roman)
 }
 
 /****************************************************************************************/
-static void _convertDecimalToRoman(int decimal, char *roman)
+static int _convertDecimalToRoman(int decimal, char *roman)
 {
 	int decadeIndex;
-
+	int ret = 0;
+	
 	*roman = '\0';
 	
-	for (decadeIndex = 0; decadeIndex < NBR_OF_LUT_DECADE_ENTRIES; ++decadeIndex)
+	if (decimal <= MAXIMUM_ROMAN_NUMBER_DECIMAL)
 	{
-		int decadeValue = decimal/DecadeValues[decadeIndex];
-		const char *digitStr = ConvertDecimalToRomanByDecadeLUT[decadeIndex][decadeValue];
-		strcat(roman, digitStr);
-		decimal -= decadeValue * DecadeValues[decadeIndex];
+		for (decadeIndex = 0; decadeIndex < NBR_OF_LUT_DECADE_ENTRIES; ++decadeIndex)
+		{
+			int decadeValue = decimal/DecadeValues[decadeIndex];
+			const char *digitStr = ConvertDecimalToRomanByDecadeLUT[decadeIndex][decadeValue];
+			strcat(roman, digitStr);
+			decimal -= decadeValue * DecadeValues[decadeIndex];
+		}
+		
+		ret = 1;
 	}
+	return ret;
 }
 
 /****************************************************************************************/
@@ -108,6 +119,8 @@ static void _convertDecimalToRoman(int decimal, char *roman)
 RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum)
 {
 	int adec, bdec, sumdec;
+	int result;
+	RomanNumLibResults ret = eRomanNumLib_NoError;
 	
 	if (!aval || !bval || !sum)
 	{
@@ -117,9 +130,14 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 	adec = _convertRomanToDecimal(aval);
 	bdec = _convertRomanToDecimal(bval);
 	sumdec = adec + bdec;
-	_convertDecimalToRoman(sumdec, sum);
+	result = _convertDecimalToRoman(sumdec, sum);
 	
-	return eRomanNumLib_NoError;
+	if (!result)
+	{
+		ret = eRomanNumLib_Error;
+	}
+	
+	return ret;
 }
 
 /****************************************************************************************/
