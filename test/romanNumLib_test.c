@@ -248,6 +248,13 @@ START_TEST (test_romanNumbersSub_GuardsAgainstNullInputB)
 }
 END_TEST
 
+START_TEST (test_romanNumbersSub_GuardsAgainstNullOutputBuffer)
+{
+	RomanNumLibResults result = romanNumbersSub("", "", NULL);
+	ck_assert(result == eRomanNumLib_Error);
+}
+END_TEST
+
 /****************************************************************************************/
 Suite * RomanNumberalLib_suite(void)
 {
@@ -287,6 +294,7 @@ Suite * RomanNumberalLib_suite(void)
 	tcase_add_test(tc_core, test_romanNumbersAdd_GuardsAgainstInvalidInputB);
 	tcase_add_test(tc_core, test_romanNumbersSub_GuardsAgainstNullInputA);
 	tcase_add_test(tc_core, test_romanNumbersSub_GuardsAgainstNullInputB);
+	tcase_add_test(tc_core, test_romanNumbersSub_GuardsAgainstNullOutputBuffer);
 	
     suite_add_tcase(s, tc_core);
     
