@@ -181,6 +181,15 @@ START_TEST (test_romanNumbersAdd_Add_dcccl_Plus_lxxiii)
 }
 END_TEST
 
+START_TEST (test_romanNumbersAdd_Add_cml_Plus_li)
+{
+	char buffer[80];
+	RomanNumLibResults result = romanNumbersAdd("cml", "li", buffer);
+	ck_assert(result == eRomanNumLib_NoError);
+	ck_assert_str_eq(buffer, "mi");
+}
+END_TEST
+
 /****************************************************************************************/
 Suite * RomanNumberalLib_suite(void)
 {
@@ -212,6 +221,7 @@ Suite * RomanNumberalLib_suite(void)
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_cccxc_Plus_xxxiii);
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_cdl_Plus_li);
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_dcccl_Plus_lxxiii);
+	tcase_add_test(tc_core, test_romanNumbersAdd_Add_cml_Plus_li);
 	
     suite_add_tcase(s, tc_core);
     

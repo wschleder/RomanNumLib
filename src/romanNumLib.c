@@ -3,14 +3,16 @@
 #include <string.h>
 
 /****************************************************************************************/
-#define NBR_OF_LUT_DECADE_ENTRIES 		3
+#define NBR_OF_LUT_DECADE_ENTRIES 		4
 #define NBR_OF_LUT_ENTRIES_PER_DECADE 	10
 
+static int DecadeValues[NBR_OF_LUT_DECADE_ENTRIES] = { 1000, 100, 10, 1 };
 static char* ConvertDecimalToRomanByDecadeLUT[NBR_OF_LUT_DECADE_ENTRIES][NBR_OF_LUT_ENTRIES_PER_DECADE] =
 	{
-		{ "", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix" },
+		{ "", "m", "mm", "mmm",   "",  "",   "",    "",     "",   "" },
+		{ "", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm" },
 		{ "", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc" },
-		{ "", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm" }
+		{ "", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix" }
 	};
 
 
@@ -24,6 +26,7 @@ typedef struct
 
 static const RomanToIntMapEntry CovertRomanSymbolToIntMap[] =
 {
+	{  "cm",   900,      1  },
 	{  "d",    500,      1  },
 	{  "cd",   400,      1  },
 	{  "c",    100,      3  },
@@ -85,19 +88,16 @@ static int _convertRomanToDecimal(const char *roman)
 /****************************************************************************************/
 static void _convertDecimalToRoman(int decimal, char *roman)
 {
-	int hunds = decimal/100;
-	int tens  = (decimal - hunds*100)/10;
-	int ones  = decimal - hunds*100 - tens*10;
+	int decadeIndex;
+
+	*roman = '\0';
 	
-	if (decimal >= 0 && tens < 10)
+	for (decadeIndex = 0; decadeIndex < NBR_OF_LUT_DECADE_ENTRIES; ++decadeIndex)
 	{
-		const char *digitStr;
-		digitStr = ConvertDecimalToRomanByDecadeLUT[2][hunds];
-		strcpy(roman, digitStr);
-		digitStr = ConvertDecimalToRomanByDecadeLUT[1][tens];
+		int decadeValue = decimal/DecadeValues[decadeIndex];
+		const char *digitStr = ConvertDecimalToRomanByDecadeLUT[decadeIndex][decadeValue];
 		strcat(roman, digitStr);
-		digitStr = ConvertDecimalToRomanByDecadeLUT[0][ones];
-		strcat(roman, digitStr);
+		decimal -= decadeValue * DecadeValues[decadeIndex];
 	}
 }
 
