@@ -156,6 +156,11 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 /****************************************************************************************/
 RomanNumLibResults romanNumbersSub(const char *aval, const char *bval, char *diff)
 {
+	if (!aval || !bval || !diff)
+	{
+		return eRomanNumLib_Error;
+	}
+
 	return eRomanNumLib_NoError;
 }
 
