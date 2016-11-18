@@ -26,6 +26,7 @@ typedef struct
 
 static const RomanToIntMapEntry CovertRomanSymbolToIntMap[] =
 {
+	{  "m",   1000,      3  },
 	{  "cm",   900,      1  },
 	{  "d",    500,      1  },
 	{  "cd",   400,      1  },

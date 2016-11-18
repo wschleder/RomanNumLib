@@ -190,6 +190,15 @@ START_TEST (test_romanNumbersAdd_Add_cml_Plus_li)
 }
 END_TEST
 
+START_TEST (test_romanNumbersAdd_Add_mmmdlv_Plus_cccxxxiii)
+{
+	char buffer[80];
+	RomanNumLibResults result = romanNumbersAdd("mmmdlv", "cccxxxiii", buffer);
+	ck_assert(result == eRomanNumLib_NoError);
+	ck_assert_str_eq(buffer, "mmmdccclxxxviii");
+}
+END_TEST
+
 /****************************************************************************************/
 Suite * RomanNumberalLib_suite(void)
 {
@@ -222,6 +231,7 @@ Suite * RomanNumberalLib_suite(void)
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_cdl_Plus_li);
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_dcccl_Plus_lxxiii);
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_cml_Plus_li);
+	tcase_add_test(tc_core, test_romanNumbersAdd_Add_mmmdlv_Plus_cccxxxiii);
 	
     suite_add_tcase(s, tc_core);
     
