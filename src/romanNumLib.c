@@ -3,13 +3,14 @@
 #include <string.h>
 
 /****************************************************************************************/
-#define NBR_OF_LUT_DECADE_ENTRIES 		2
+#define NBR_OF_LUT_DECADE_ENTRIES 		3
 #define NBR_OF_LUT_ENTRIES_PER_DECADE 	10
 
 static char* ConvertDecimalToRomanByDecadeLUT[NBR_OF_LUT_DECADE_ENTRIES][NBR_OF_LUT_ENTRIES_PER_DECADE] =
 	{
 		{ "", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix" },
-		{ "", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc" }
+		{ "", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc" },
+		{ "", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm" }
 	};
 
 
@@ -23,6 +24,7 @@ typedef struct
 
 static const RomanToIntMapEntry CovertRomanSymbolToIntMap[] =
 {
+	{  "xc",    90,      1  },
 	{  "l",     50,      1  },
 	{  "xl",    40,      1  },
 	{  "x",     10,      3  },
@@ -80,14 +82,17 @@ static int _convertRomanToDecimal(const char *roman)
 /****************************************************************************************/
 static void _convertDecimalToRoman(int decimal, char *roman)
 {
-	int tens = decimal/10;
-	int ones = decimal - tens*10;
+	int hunds = decimal/100;
+	int tens  = (decimal - hunds*100)/10;
+	int ones  = decimal - hunds*100 - tens*10;
 	
 	if (decimal >= 0 && tens < 10)
 	{
 		const char *digitStr;
-		digitStr = ConvertDecimalToRomanByDecadeLUT[1][tens];
+		digitStr = ConvertDecimalToRomanByDecadeLUT[2][hunds];
 		strcpy(roman, digitStr);
+		digitStr = ConvertDecimalToRomanByDecadeLUT[1][tens];
+		strcat(roman, digitStr);
 		digitStr = ConvertDecimalToRomanByDecadeLUT[0][ones];
 		strcat(roman, digitStr);
 	}
