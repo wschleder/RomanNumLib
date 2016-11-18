@@ -216,6 +216,22 @@ START_TEST (test_romanNumbersAdd_GuardsAgainstOverflow)
 }
 END_TEST
 
+START_TEST (test_romanNumbersAdd_GuardsAgainstInvalidInputA)
+{
+	char buffer[80];
+	RomanNumLibResults result = romanNumbersAdd("mmmcmicix", "i", buffer);
+	ck_assert(result == eRomanNumLib_Error);
+}
+END_TEST
+
+START_TEST (test_romanNumbersAdd_GuardsAgainstInvalidInputB)
+{
+	char buffer[80];
+	RomanNumLibResults result = romanNumbersAdd("i", "mmmcmzxcix", buffer);
+	ck_assert(result == eRomanNumLib_Error);
+}
+END_TEST
+
 /****************************************************************************************/
 Suite * RomanNumberalLib_suite(void)
 {
@@ -251,6 +267,8 @@ Suite * RomanNumberalLib_suite(void)
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_mmmdlv_Plus_cccxxxiii);
 	tcase_add_test(tc_core, test_romanNumbersAdd_Add_0_Plus_mmmcmxcix);
 	tcase_add_test(tc_core, test_romanNumbersAdd_GuardsAgainstOverflow);
+	tcase_add_test(tc_core, test_romanNumbersAdd_GuardsAgainstInvalidInputA);
+	tcase_add_test(tc_core, test_romanNumbersAdd_GuardsAgainstInvalidInputB);
 	
     suite_add_tcase(s, tc_core);
     

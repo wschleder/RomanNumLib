@@ -5,6 +5,7 @@
 /****************************************************************************************/
 
 #define MAXIMUM_ROMAN_NUMBER_DECIMAL	3999
+#define DECIMAL_CONVERT_ERROR_VALUE		-1
 
 /****************************************************************************************/
 #define NBR_OF_LUT_DECADE_ENTRIES 		4
@@ -81,10 +82,15 @@ static int _convertRomanToDecimal(const char *roman)
 	for (mapIndex = 0; mapIndex < mapSize; mapIndex++)
 	{
 		const RomanToIntMapEntry *mapEntry = &CovertRomanSymbolToIntMap[mapIndex];
-
+		
 		int matchCount = _tryToMatchToSymbolToTableEntry(&roman[romanIndex], mapEntry);
 		decimal += matchCount * mapEntry->decimalValue;
 		romanIndex += matchCount * strlen(mapEntry->romanSymbol);
+	}
+	
+	if (romanIndex != strlen(roman))
+	{
+		decimal = DECIMAL_CONVERT_ERROR_VALUE;
 	}
 	
 	return decimal;
@@ -126,15 +132,22 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 	{
 		return eRomanNumLib_Error;
 	}
-
+	
 	adec = _convertRomanToDecimal(aval);
 	bdec = _convertRomanToDecimal(bval);
-	sumdec = adec + bdec;
-	result = _convertDecimalToRoman(sumdec, sum);
 	
-	if (!result)
+	if (adec == DECIMAL_CONVERT_ERROR_VALUE || bdec == DECIMAL_CONVERT_ERROR_VALUE)
 	{
 		ret = eRomanNumLib_Error;
+	}
+	else
+	{
+		sumdec = adec + bdec;
+		result = _convertDecimalToRoman(sumdec, sum);
+		if (!result)
+		{
+			ret = eRomanNumLib_Error;
+		}
 	}
 	
 	return ret;
@@ -143,6 +156,6 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 /****************************************************************************************/
 RomanNumLibResults romanNumbersSub(const char *aval, const char *bval, char *diff)
 {
-    return eRomanNumLib_NoError;
+	return eRomanNumLib_NoError;
 }
 
