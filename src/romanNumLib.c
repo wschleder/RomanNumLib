@@ -156,11 +156,32 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 /****************************************************************************************/
 RomanNumLibResults romanNumbersSub(const char *aval, const char *bval, char *diff)
 {
+	int adec, bdec, diffdec;
+	int result;
+	RomanNumLibResults ret = eRomanNumLib_NoError;
+	
 	if (!aval || !bval || !diff)
 	{
 		return eRomanNumLib_Error;
 	}
-
-	return eRomanNumLib_NoError;
+	
+	adec = _convertRomanToDecimal(aval);
+	bdec = _convertRomanToDecimal(bval);
+	
+	if (adec == DECIMAL_CONVERT_ERROR_VALUE || bdec == DECIMAL_CONVERT_ERROR_VALUE)
+	{
+		ret = eRomanNumLib_Error;
+	}
+	else
+	{
+		diffdec = adec - bdec;
+		result = _convertDecimalToRoman(diffdec, diff);
+		if (!result)
+		{
+			ret = eRomanNumLib_Error;
+		}
+	}
+	
+	return ret;
 }
 
