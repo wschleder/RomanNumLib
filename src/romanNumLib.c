@@ -104,7 +104,7 @@ static int _convertDecimalToRoman(int decimal, char *roman)
 	
 	*roman = '\0';
 	
-	if (decimal <= MAXIMUM_ROMAN_NUMBER_DECIMAL)
+	if (decimal >= 0 && decimal <= MAXIMUM_ROMAN_NUMBER_DECIMAL)
 	{
 		for (decadeIndex = 0; decadeIndex < NBR_OF_LUT_DECADE_ENTRIES; ++decadeIndex)
 		{
