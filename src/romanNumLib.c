@@ -7,6 +7,12 @@
 #define MAXIMUM_ROMAN_NUMBER_DECIMAL	3999
 #define DECIMAL_CONVERT_ERROR_VALUE		-1
 
+typedef enum
+{
+	eSubtract = -1,
+	eAdd = 1
+} Operation;
+
 /****************************************************************************************/
 #define NBR_OF_LUT_DECADE_ENTRIES 		4
 #define NBR_OF_LUT_ENTRIES_PER_DECADE 	10
@@ -120,15 +126,13 @@ static int _convertDecimalToRoman(int decimal, char *roman)
 }
 
 /****************************************************************************************/
-//  Public Functions
-/****************************************************************************************/
-RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum)
+static RomanNumLibResults _doAddSubtractOperation(const char *aval, const char *bval, char *resultVal, Operation op)
 {
-	int adec, bdec, sumdec;
+	int adec, bdec, resdec;
 	int result;
 	RomanNumLibResults ret = eRomanNumLib_NoError;
 	
-	if (!aval || !bval || !sum)
+	if (!aval || !bval || !resultVal)
 	{
 		return eRomanNumLib_Error;
 	}
@@ -142,8 +146,8 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 	}
 	else
 	{
-		sumdec = adec + bdec;
-		result = _convertDecimalToRoman(sumdec, sum);
+		resdec = adec + op * bdec;
+		result = _convertDecimalToRoman(resdec, resultVal);
 		if (!result)
 		{
 			ret = eRomanNumLib_Error;
@@ -151,37 +155,21 @@ RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum
 	}
 	
 	return ret;
+}
+
+/****************************************************************************************/
+//  Public Functions
+/****************************************************************************************/
+RomanNumLibResults romanNumbersAdd(const char *aval, const char *bval, char *sum)
+{
+	return _doAddSubtractOperation(aval, bval, sum, eAdd);
 }
 
 /****************************************************************************************/
 RomanNumLibResults romanNumbersSub(const char *aval, const char *bval, char *diff)
 {
-	int adec, bdec, diffdec;
-	int result;
-	RomanNumLibResults ret = eRomanNumLib_NoError;
-	
-	if (!aval || !bval || !diff)
-	{
-		return eRomanNumLib_Error;
-	}
-	
-	adec = _convertRomanToDecimal(aval);
-	bdec = _convertRomanToDecimal(bval);
-	
-	if (adec == DECIMAL_CONVERT_ERROR_VALUE || bdec == DECIMAL_CONVERT_ERROR_VALUE)
-	{
-		ret = eRomanNumLib_Error;
-	}
-	else
-	{
-		diffdec = adec - bdec;
-		result = _convertDecimalToRoman(diffdec, diff);
-		if (!result)
-		{
-			ret = eRomanNumLib_Error;
-		}
-	}
-	
-	return ret;
+	return _doAddSubtractOperation(aval, bval, diff, eSubtract);
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
