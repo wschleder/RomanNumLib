@@ -300,6 +300,15 @@ START_TEST (test_romanNumbersSub_Subtract_mmmdccclxxxviii_Minus_cccxxxiii)
 }
 END_TEST
 
+START_TEST (test_romanNumbersSub_Subtractration_With_Zero_Result)
+{
+	char buffer[80];
+	RomanNumLibResults result = romanNumbersSub("mmmdccclxxxviii", "mmmdccclxxxviii", buffer);
+	ck_assert(result == eRomanNumLib_NoError);
+	ck_assert_str_eq(buffer, "");
+}
+END_TEST
+
 
 /****************************************************************************************/
 Suite * RomanNumberalLib_suite(void)
@@ -346,6 +355,7 @@ Suite * RomanNumberalLib_suite(void)
 	tcase_add_test(tc_core, test_romanNumbersSub_Subtract_li_Minus_iii);
 	tcase_add_test(tc_core, test_romanNumbersSub_Subtract_di_Minus_li);
 	tcase_add_test(tc_core, test_romanNumbersSub_Subtract_mmmdccclxxxviii_Minus_cccxxxiii);
+	tcase_add_test(tc_core, test_romanNumbersSub_Subtractration_With_Zero_Result);
 	
     suite_add_tcase(s, tc_core);
     
