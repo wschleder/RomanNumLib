@@ -1,6 +1,6 @@
 This repository contains a Roman Numeral utility library implemented in "C". It performs
 addition and subtraction of roman numbers. See src/romanNumLib.h for the supported public
-functions. This software was written with the intent of demonstrating the Test Driven 
+functions. This software was written with the intent of demonstrating the Test Driven
 Development (TDD) process.
 
 The src/ directory contains the library source files romanNumLib.c and .h
@@ -11,6 +11,9 @@ executable. Run "./romanNumLib_test" to execute the unit tests.
 
 The root directory contain an app invoked with roman.exe. Running it with no parameters gives
 its usage. It is simply provided to illustrate library usage.
+
+For the purpose of this demonstration, only lower case roman numbers are supported. This
+is stated in the app usage output.
 
 NOTES:
 
