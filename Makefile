@@ -1,4 +1,4 @@
-APPEXE = app.exe
+APPEXE = roman.exe
 LIB = libRomanNumUtil.a
 TESTEXE = romanNumlib_test.exe
 
@@ -26,11 +26,12 @@ ARFLAGS = rcs
 
 .PHONY: all app test clean clobber show
 
-all: test
+app: $(APPEXE)
 
-show:
-	@echo "CFlags: " $(CFLAGS)
-	@echo "Libs: " $(LDFLAGS)
+all: test app
+
+$(APPEXE): $(SRCFILES:.c=.o) main.o
+	$(LD) $^ -o $(APPEXE)
 
 test: $(TESTDIR)/${TESTEXE}
 	@echo
@@ -45,11 +46,13 @@ $(TESTDIR)/%.o: $(TESTDIR)/%.c
 $(SRCDIR)/%.o: $(SRCDIR)/%.c
 	${CC} ${CFLAGS} -c $< -o $@ -MMD
 
-app: main.o
-	$(LD) $^ $(LDFLAGS) -o $(APPEXE)
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@ -MMD
+
+show:
+@echo "CFlags: " $(CFLAGS)
+@echo "Libs: " $(LDFLAGS)
 
 clean:
 	rm -f ${TESTDIR}/${TESTEXE}
